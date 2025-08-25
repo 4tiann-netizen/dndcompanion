@@ -214,9 +214,10 @@ class DnDTracker {
             this.saveData();
         });
 
-        // Weapons - use event delegation for reliability
+        // Weapons - use arrow function to preserve 'this' context
         document.addEventListener('click', (e) => {
             if (e.target.id === 'addWeaponBtn') {
+                e.preventDefault();
                 this.addWeapon();
             }
         });
@@ -350,9 +351,18 @@ class DnDTracker {
 
     addWeapon() {
         console.log('addWeapon called');
+        console.log('this:', this);
+        console.log('this.data:', this.data);
+        
+        // Ensure data object exists
+        if (!this.data) {
+            console.error('this.data is undefined!');
+            return;
+        }
         
         // Ensure weapons array exists
         if (!this.data.weapons) {
+            console.log('Creating weapons array');
             this.data.weapons = [];
         }
         
