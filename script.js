@@ -214,9 +214,11 @@ class DnDTracker {
             this.saveData();
         });
 
-        // Weapons
-        document.getElementById('addWeaponBtn').addEventListener('click', () => {
-            this.addWeapon();
+        // Weapons - use event delegation for reliability
+        document.addEventListener('click', (e) => {
+            if (e.target.id === 'addWeaponBtn') {
+                this.addWeapon();
+            }
         });
 
         // Inventory
@@ -347,8 +349,11 @@ class DnDTracker {
     }
 
     addWeapon() {
+        console.log('addWeapon called');
         const weaponSelect = document.getElementById('weaponSelect');
-        const selectedWeapon = weaponSelect.value;
+        const selectedWeapon = weaponSelect ? weaponSelect.value : null;
+        
+        console.log('Selected weapon:', selectedWeapon);
 
         if (selectedWeapon && this.weaponsDatabase[selectedWeapon]) {
             const weapon = {
@@ -361,6 +366,9 @@ class DnDTracker {
             weaponSelect.value = '';
             this.updateWeaponsDisplay();
             this.saveData();
+            console.log('Weapon added:', weapon);
+        } else {
+            console.log('No weapon selected or weapon not found in database');
         }
     }
 
