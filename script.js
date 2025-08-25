@@ -168,20 +168,20 @@ class DnDTracker {
             this.saveData();
         });
 
-        // Currency buttons
-        document.querySelectorAll('.currency-btn').forEach(btn => {
+        // Currency action buttons
+        document.querySelectorAll('.currency-action').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 const currency = e.target.dataset.currency;
-                const isPlus = e.target.classList.contains('plus');
+                const action = e.target.dataset.action;
                 const currentValue = this.data.currency[currency] || 0;
                 
-                if (isPlus) {
+                if (action === 'add') {
                     this.data.currency[currency] = currentValue + 1;
-                } else {
+                } else if (action === 'subtract') {
                     this.data.currency[currency] = Math.max(0, currentValue - 1);
                 }
                 
-                document.getElementById(currency).value = this.data.currency[currency];
+                this.updateCurrencyDisplay();
                 this.saveData();
             });
         });
@@ -368,6 +368,12 @@ class DnDTracker {
         homeCharacterName.textContent = homeDisplayName;
     }
 
+    updateCurrencyDisplay() {
+        document.getElementById('goldDisplay').textContent = this.data.currency?.gold || 0;
+        document.getElementById('silverDisplay').textContent = this.data.currency?.silver || 0;
+        document.getElementById('copperDisplay').textContent = this.data.currency?.copper || 0;
+    }
+
     updateUI() {
         // Character info
         document.getElementById('characterName').value = this.data.characterName;
@@ -393,10 +399,11 @@ class DnDTracker {
         document.getElementById('maxHP').value = this.data.hp.max;
         document.getElementById('armorClass').value = this.data.armorClass;
 
-        // Currency
+        // Currency - update both hidden inputs and display
         document.getElementById('gold').value = this.data.currency ? this.data.currency.gold || 0 : this.data.gold || 0;
         document.getElementById('silver').value = this.data.currency ? this.data.currency.silver || 0 : 0;
         document.getElementById('copper').value = this.data.currency ? this.data.currency.copper || 0 : 0;
+        this.updateCurrencyDisplay();
 
         // Inventory and Locations
         this.updateInventoryDisplay();
