@@ -168,13 +168,16 @@ class DnDTracker {
             this.saveData();
         });
 
-        // Currency action buttons - enhanced mobile support
-        document.querySelectorAll('.currency-action').forEach(btn => {
-            let touchStarted = false;
-            
-            const handleCurrencyAction = () => {
-                const currency = btn.dataset.currency;
-                const action = btn.dataset.action;
+        // Currency action buttons - simple approach
+        document.addEventListener('click', (e) => {
+            if (e.target.classList.contains('currency-action')) {
+                e.preventDefault();
+                
+                const currency = e.target.getAttribute('data-currency');
+                const action = e.target.getAttribute('data-action');
+                
+                if (!currency || !action) return;
+                
                 const currentValue = this.data.currency[currency] || 0;
                 
                 if (action === 'add') {
@@ -183,37 +186,13 @@ class DnDTracker {
                     this.data.currency[currency] = Math.max(0, currentValue - 1);
                 }
                 
-                document.getElementById(currency).value = this.data.currency[currency];
+                const inputElement = document.getElementById(currency);
+                if (inputElement) {
+                    inputElement.value = this.data.currency[currency];
+                }
+                
                 this.saveData();
-            };
-            
-            // Handle touch events
-            btn.addEventListener('touchstart', (e) => {
-                e.preventDefault();
-                touchStarted = true;
-                btn.style.transform = 'scale(0.9)';
-            });
-            
-            btn.addEventListener('touchend', (e) => {
-                e.preventDefault();
-                if (touchStarted) {
-                    handleCurrencyAction();
-                    touchStarted = false;
-                    btn.style.transform = '';
-                }
-            });
-            
-            btn.addEventListener('touchcancel', (e) => {
-                touchStarted = false;
-                btn.style.transform = '';
-            });
-            
-            // Handle click for desktop
-            btn.addEventListener('click', (e) => {
-                if (!touchStarted) {
-                    handleCurrencyAction();
-                }
-            });
+            }
         });
 
         // Inventory
