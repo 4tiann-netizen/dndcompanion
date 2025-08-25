@@ -168,14 +168,13 @@ class DnDTracker {
             this.saveData();
         });
 
-        // Currency action buttons - handle both click and touch events
+        // Currency action buttons - enhanced mobile support
         document.querySelectorAll('.currency-action').forEach(btn => {
-            const handleCurrencyAction = (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                
-                const currency = e.target.dataset.currency;
-                const action = e.target.dataset.action;
+            let touchStarted = false;
+            
+            const handleCurrencyAction = () => {
+                const currency = btn.dataset.currency;
+                const action = btn.dataset.action;
                 const currentValue = this.data.currency[currency] || 0;
                 
                 if (action === 'add') {
@@ -188,8 +187,33 @@ class DnDTracker {
                 this.saveData();
             };
             
-            btn.addEventListener('click', handleCurrencyAction);
-            btn.addEventListener('touchend', handleCurrencyAction);
+            // Handle touch events
+            btn.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                touchStarted = true;
+                btn.style.transform = 'scale(0.9)';
+            });
+            
+            btn.addEventListener('touchend', (e) => {
+                e.preventDefault();
+                if (touchStarted) {
+                    handleCurrencyAction();
+                    touchStarted = false;
+                    btn.style.transform = '';
+                }
+            });
+            
+            btn.addEventListener('touchcancel', (e) => {
+                touchStarted = false;
+                btn.style.transform = '';
+            });
+            
+            // Handle click for desktop
+            btn.addEventListener('click', (e) => {
+                if (!touchStarted) {
+                    handleCurrencyAction();
+                }
+            });
         });
 
         // Inventory
