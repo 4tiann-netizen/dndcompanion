@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D&D Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>D&D Campaign Tracker</h1>
+            <div class="character-info">
+                <input type="text" id="characterName" placeholder="Character Name" class="character-name-input">
+                <span class="level-display">Level: <span id="characterLevel">1</span></span>
+            </div>
+        </header>
+
+        <div class="main-content">
+            <!-- Stats Section -->
+            <section class="stats-section">
+                <h2>Character Stats</h2>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <label for="strength">STR</label>
+                        <input type="number" id="strength" min="1" max="20" value="10">
+                        <span class="modifier" id="strMod">+0</span>
+                    </div>
+                    <div class="stat-item">
+                        <label for="dexterity">DEX</label>
+                        <input type="number" id="dexterity" min="1" max="20" value="10">
+                        <span class="modifier" id="dexMod">+0</span>
+                    </div>
+                    <div class="stat-item">
+                        <label for="constitution">CON</label>
+                        <input type="number" id="constitution" min="1" max="20" value="10">
+                        <span class="modifier" id="conMod">+0</span>
+                    </div>
+                    <div class="stat-item">
+                        <label for="intelligence">INT</label>
+                        <input type="number" id="intelligence" min="1" max="20" value="10">
+                        <span class="modifier" id="intMod">+0</span>
+                    </div>
+                    <div class="stat-item">
+                        <label for="wisdom">WIS</label>
+                        <input type="number" id="wisdom" min="1" max="20" value="10">
+                        <span class="modifier" id="wisMod">+0</span>
+                    </div>
+                    <div class="stat-item">
+                        <label for="charisma">CHA</label>
+                        <input type="number" id="charisma" min="1" max="20" value="10">
+                        <span class="modifier" id="chaMod">+0</span>
+                    </div>
+                </div>
+
+                <div class="hp-ac-section">
+                    <div class="hp-container">
+                        <label>Hit Points</label>
+                        <div class="hp-inputs">
+                            <input type="number" id="currentHP" min="0" value="10">
+                            <span>/</span>
+                            <input type="number" id="maxHP" min="1" value="10">
+                        </div>
+                    </div>
+                    <div class="ac-container">
+                        <label for="armorClass">Armor Class</label>
+                        <input type="number" id="armorClass" min="0" value="10">
+                    </div>
+                    <div class="level-container">
+                        <label for="level">Level</label>
+                        <input type="number" id="level" min="1" max="20" value="1">
+                    </div>
+                </div>
+            </section>
+
+            <!-- Inventory Section -->
+            <section class="inventory-section">
+                <h2>Inventory</h2>
+                <div class="inventory-controls">
+                    <input type="text" id="itemInput" placeholder="Add item...">
+                    <input type="number" id="itemQuantity" placeholder="Qty" min="1" value="1">
+                    <button id="addItemBtn">Add Item</button>
+                </div>
+                <div class="inventory-list" id="inventoryList">
+                    <!-- Items will be added here dynamically -->
+                </div>
+                <div class="gold-tracker">
+                    <label for="gold">Gold: </label>
+                    <input type="number" id="gold" min="0" value="0">
+                </div>
+            </section>
+
+            <!-- Locations Section -->
+            <section class="locations-section">
+                <h2>Locations & Notes</h2>
+                <div class="location-controls">
+                    <input type="text" id="locationInput" placeholder="Location name...">
+                    <button id="addLocationBtn">Add Location</button>
+                </div>
+                <div class="locations-list" id="locationsList">
+                    <!-- Locations will be added here dynamically -->
+                </div>
+            </section>
+        </div>
+
+        <footer>
+            <button id="saveBtn" class="save-btn">Save Progress</button>
+            <button id="clearBtn" class="clear-btn">Clear All Data</button>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

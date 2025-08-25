@@ -1,0 +1,351 @@
+// D&D Tracker App JavaScript
+
+class DnDTracker {
+    constructor() {
+        this.data = {
+            characterName: '',
+            level: 1,
+            stats: {
+                strength: 10,
+                dexterity: 10,
+                constitution: 10,
+                intelligence: 10,
+                wisdom: 10,
+                charisma: 10
+            },
+            hp: {
+                current: 10,
+                max: 10
+            },
+            armorClass: 10,
+            gold: 0,
+            inventory: [],
+            locations: []
+        };
+        
+        this.init();
+    }
+
+    init() {
+        this.loadData();
+        this.bindEvents();
+        this.updateUI();
+    }
+
+    bindEvents() {
+        // Character name
+        document.getElementById('characterName').addEventListener('input', (e) => {
+            this.data.characterName = e.target.value;
+            this.saveData();
+        });
+
+        // Level
+        document.getElementById('level').addEventListener('input', (e) => {
+            this.data.level = parseInt(e.target.value) || 1;
+            document.getElementById('characterLevel').textContent = this.data.level;
+            this.saveData();
+        });
+
+        // Stats
+        ['strength', 'dexterity', 'constitution', 'intelligence', 'wisdom', 'charisma'].forEach(stat => {
+            document.getElementById(stat).addEventListener('input', (e) => {
+                this.data.stats[stat] = parseInt(e.target.value) || 10;
+                this.updateModifier(stat);
+                this.saveData();
+            });
+        });
+
+        // HP
+        document.getElementById('currentHP').addEventListener('input', (e) => {
+            this.data.hp.current = parseInt(e.target.value) || 0;
+            this.saveData();
+        });
+
+        document.getElementById('maxHP').addEventListener('input', (e) => {
+            this.data.hp.max = parseInt(e.target.value) || 1;
+            this.saveData();
+        });
+
+        // Armor Class
+        document.getElementById('armorClass').addEventListener('input', (e) => {
+            this.data.armorClass = parseInt(e.target.value) || 10;
+            this.saveData();
+        });
+
+        // Gold
+        document.getElementById('gold').addEventListener('input', (e) => {
+            this.data.gold = parseInt(e.target.value) || 0;
+            this.saveData();
+        });
+
+        // Inventory
+        document.getElementById('addItemBtn').addEventListener('click', () => {
+            this.addItem();
+        });
+
+        document.getElementById('itemInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                this.addItem();
+            }
+        });
+
+        // Locations
+        document.getElementById('addLocationBtn').addEventListener('click', () => {
+            this.addLocation();
+        });
+
+        document.getElementById('locationInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                this.addLocation();
+            }
+        });
+
+        // Save and Clear buttons
+        document.getElementById('saveBtn').addEventListener('click', () => {
+            this.saveData();
+            this.showNotification('Progress saved!');
+        });
+
+        document.getElementById('clearBtn').addEventListener('click', () => {
+            if (confirm('Are you sure you want to clear all data? This cannot be undone.')) {
+                this.clearData();
+            }
+        });
+    }
+
+    calculateModifier(score) {
+        return Math.floor((score - 10) / 2);
+    }
+
+    updateModifier(stat) {
+        const score = this.data.stats[stat];
+        const modifier = this.calculateModifier(score);
+        const modifierElement = document.getElementById(stat.substring(0, 3) + 'Mod');
+        modifierElement.textContent = modifier >= 0 ? `+${modifier}` : modifier;
+    }
+
+    addItem() {
+        const itemInput = document.getElementById('itemInput');
+        const quantityInput = document.getElementById('itemQuantity');
+        const itemName = itemInput.value.trim();
+        const quantity = parseInt(quantityInput.value) || 1;
+
+        if (itemName) {
+            const existingItem = this.data.inventory.find(item => item.name === itemName);
+            
+            if (existingItem) {
+                existingItem.quantity += quantity;
+            } else {
+                this.data.inventory.push({
+                    id: Date.now(),
+                    name: itemName,
+                    quantity: quantity
+                });
+            }
+
+            itemInput.value = '';
+            quantityInput.value = 1;
+            this.updateInventoryDisplay();
+            this.saveData();
+        }
+    }
+
+    removeItem(id) {
+        this.data.inventory = this.data.inventory.filter(item => item.id !== id);
+        this.updateInventoryDisplay();
+        this.saveData();
+    }
+
+    updateInventoryDisplay() {
+        const inventoryList = document.getElementById('inventoryList');
+        inventoryList.innerHTML = '';
+
+        this.data.inventory.forEach(item => {
+            const itemElement = document.createElement('div');
+            itemElement.className = 'inventory-item';
+            itemElement.innerHTML = `
+                <div class="item-info">
+                    <span class="item-name">${item.name}</span>
+                    <span class="item-quantity">x${item.quantity}</span>
+                </div>
+                <button class="delete-btn" onclick="tracker.removeItem(${item.id})">Remove</button>
+            `;
+            inventoryList.appendChild(itemElement);
+        });
+    }
+
+    addLocation() {
+        const locationInput = document.getElementById('locationInput');
+        const locationName = locationInput.value.trim();
+
+        if (locationName) {
+            const location = {
+                id: Date.now(),
+                name: locationName,
+                notes: ''
+            };
+
+            this.data.locations.push(location);
+            locationInput.value = '';
+            this.updateLocationsDisplay();
+            this.saveData();
+        }
+    }
+
+    removeLocation(id) {
+        this.data.locations = this.data.locations.filter(loc => loc.id !== id);
+        this.updateLocationsDisplay();
+        this.saveData();
+    }
+
+    updateLocationNotes(id, notes) {
+        const location = this.data.locations.find(loc => loc.id === id);
+        if (location) {
+            location.notes = notes;
+            this.saveData();
+        }
+    }
+
+    updateLocationsDisplay() {
+        const locationsList = document.getElementById('locationsList');
+        locationsList.innerHTML = '';
+
+        this.data.locations.forEach(location => {
+            const locationElement = document.createElement('div');
+            locationElement.className = 'location-item';
+            locationElement.innerHTML = `
+                <div class="location-info">
+                    <strong>${location.name}</strong>
+                    <textarea 
+                        class="location-notes" 
+                        placeholder="Add notes about this location..."
+                        onchange="tracker.updateLocationNotes(${location.id}, this.value)"
+                    >${location.notes}</textarea>
+                </div>
+                <button class="delete-btn" onclick="tracker.removeLocation(${location.id})">Remove</button>
+            `;
+            locationsList.appendChild(locationElement);
+        });
+    }
+
+    updateUI() {
+        // Character info
+        document.getElementById('characterName').value = this.data.characterName;
+        document.getElementById('level').value = this.data.level;
+        document.getElementById('characterLevel').textContent = this.data.level;
+
+        // Stats
+        Object.keys(this.data.stats).forEach(stat => {
+            document.getElementById(stat).value = this.data.stats[stat];
+            this.updateModifier(stat);
+        });
+
+        // HP and AC
+        document.getElementById('currentHP').value = this.data.hp.current;
+        document.getElementById('maxHP').value = this.data.hp.max;
+        document.getElementById('armorClass').value = this.data.armorClass;
+
+        // Gold
+        document.getElementById('gold').value = this.data.gold;
+
+        // Inventory and Locations
+        this.updateInventoryDisplay();
+        this.updateLocationsDisplay();
+    }
+
+    saveData() {
+        localStorage.setItem('dndTrackerData', JSON.stringify(this.data));
+    }
+
+    loadData() {
+        const savedData = localStorage.getItem('dndTrackerData');
+        if (savedData) {
+            this.data = JSON.parse(savedData);
+        }
+    }
+
+    clearData() {
+        this.data = {
+            characterName: '',
+            level: 1,
+            stats: {
+                strength: 10,
+                dexterity: 10,
+                constitution: 10,
+                intelligence: 10,
+                wisdom: 10,
+                charisma: 10
+            },
+            hp: {
+                current: 10,
+                max: 10
+            },
+            armorClass: 10,
+            gold: 0,
+            inventory: [],
+            locations: []
+        };
+        
+        localStorage.removeItem('dndTrackerData');
+        this.updateUI();
+        this.showNotification('All data cleared!');
+    }
+
+    showNotification(message) {
+        const notification = document.createElement('div');
+        notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #27ae60;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 5px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            animation: slideIn 0.3s ease;
+        `;
+        notification.textContent = message;
+        document.body.appendChild(notification);
+
+        setTimeout(() => {
+            notification.style.animation = 'slideOut 0.3s ease';
+            setTimeout(() => {
+                document.body.removeChild(notification);
+            }, 300);
+        }, 2000);
+    }
+}
+
+// Add animations
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes slideIn {
+        from {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+        to {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+    
+    @keyframes slideOut {
+        from {
+            transform: translateX(0);
+            opacity: 1;
+        }
+        to {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+    }
+`;
+document.head.appendChild(style);
+
+// Initialize the tracker when the page loads
+let tracker;
+document.addEventListener('DOMContentLoaded', () => {
+    tracker = new DnDTracker();
+});
