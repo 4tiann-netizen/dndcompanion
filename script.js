@@ -168,6 +168,24 @@ class DnDTracker {
             this.saveData();
         });
 
+        // Currency buttons
+        document.querySelectorAll('.currency-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const currency = e.target.dataset.currency;
+                const isPlus = e.target.classList.contains('plus');
+                const currentValue = this.data.currency[currency] || 0;
+                
+                if (isPlus) {
+                    this.data.currency[currency] = currentValue + 1;
+                } else {
+                    this.data.currency[currency] = Math.max(0, currentValue - 1);
+                }
+                
+                document.getElementById(currency).value = this.data.currency[currency];
+                this.saveData();
+            });
+        });
+
         // Inventory
         document.getElementById('addItemBtn').addEventListener('click', () => {
             this.addItem();

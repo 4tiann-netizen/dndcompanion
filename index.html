@@ -357,17 +357,29 @@
                     <div class="currency-grid">
                         <div class="currency-item">
                             <span class="currency-icon">🪙</span>
-                            <input type="number" id="gold" min="0" value="0" class="currency-input">
+                            <div class="currency-controls">
+                                <button class="currency-btn minus" data-currency="gold">-</button>
+                                <input type="number" id="gold" min="0" value="0" class="currency-input">
+                                <button class="currency-btn plus" data-currency="gold">+</button>
+                            </div>
                             <span class="currency-label">Gold</span>
                         </div>
                         <div class="currency-item">
                             <span class="currency-icon">🥈</span>
-                            <input type="number" id="silver" min="0" value="0" class="currency-input">
+                            <div class="currency-controls">
+                                <button class="currency-btn minus" data-currency="silver">-</button>
+                                <input type="number" id="silver" min="0" value="0" class="currency-input">
+                                <button class="currency-btn plus" data-currency="silver">+</button>
+                            </div>
                             <span class="currency-label">Silver</span>
                         </div>
                         <div class="currency-item">
                             <span class="currency-icon">🟫</span>
-                            <input type="number" id="copper" min="0" value="0" class="currency-input">
+                            <div class="currency-controls">
+                                <button class="currency-btn minus" data-currency="copper">-</button>
+                                <input type="number" id="copper" min="0" value="0" class="currency-input">
+                                <button class="currency-btn plus" data-currency="copper">+</button>
+                            </div>
                             <span class="currency-label">Copper</span>
                         </div>
                     </div>
