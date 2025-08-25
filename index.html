@@ -17,49 +17,30 @@
             </div>
         </header>
 
-        <!-- Section Menu -->
-        <nav class="section-menu">
-            <button class="menu-btn" id="menuToggle">
-                <span class="menu-icon">☰</span>
-                <span class="menu-label">Menu</span>
+        <!-- Tab Navigation -->
+        <nav class="tab-nav">
+            <button class="tab-btn active" data-tab="character">
+                <span class="tab-icon">⚔️</span>
+                <span class="tab-label">Character</span>
             </button>
-            <div class="menu-dropdown" id="menuDropdown">
-                <div class="menu-item">
-                    <label class="toggle-label">
-                        <input type="checkbox" id="toggleStats" checked>
-                        <span class="checkmark">⚔️</span>
-                        <span class="menu-text">Character Stats</span>
-                    </label>
-                </div>
-                <div class="menu-item">
-                    <label class="toggle-label">
-                        <input type="checkbox" id="toggleInventory" checked>
-                        <span class="checkmark">🎒</span>
-                        <span class="menu-text">Inventory</span>
-                    </label>
-                </div>
-                <div class="menu-item">
-                    <label class="toggle-label">
-                        <input type="checkbox" id="toggleLocations" checked>
-                        <span class="checkmark">🗺️</span>
-                        <span class="menu-text">Locations & Notes</span>
-                    </label>
-                </div>
-                <div class="menu-divider"></div>
-                <div class="menu-item">
-                    <button id="saveBtn" class="menu-action-btn save">💾 Save Progress</button>
-                </div>
-                <div class="menu-item">
-                    <button id="clearBtn" class="menu-action-btn danger">🗑️ Clear All Data</button>
-                </div>
-            </div>
+            <button class="tab-btn" data-tab="inventory">
+                <span class="tab-icon">🎒</span>
+                <span class="tab-label">Inventory</span>
+            </button>
+            <button class="tab-btn" data-tab="locations">
+                <span class="tab-icon">🗺️</span>
+                <span class="tab-label">Locations</span>
+            </button>
+            <button class="tab-btn" data-tab="profile">
+                <span class="tab-icon">👤</span>
+                <span class="tab-label">Profile</span>
+            </button>
         </nav>
 
-        <!-- Main Content -->
-        <main class="main-content">
-            <!-- Character Section -->
-            <section id="stats-section" class="content-section">
-                <h2>⚔️ Character Stats</h2>
+        <!-- Tab Content -->
+        <main class="tab-content">
+            <!-- Character Tab -->
+            <div id="character-tab" class="tab-pane active">
                 <div class="stats-grid">
                     <div class="stat-card">
                         <div class="stat-label">STR</div>
@@ -243,11 +224,10 @@
                         <input type="number" id="level" min="1" max="20" value="1" class="combat-input">
                     </div>
                 </div>
-            </section>
+            </div>
 
-            <!-- Inventory Section -->
-            <section id="inventory-section" class="content-section">
-                <h2>🎒 Inventory</h2>
+            <!-- Inventory Tab -->
+            <div id="inventory-tab" class="tab-pane">
                 <div class="add-item-section">
                     <div class="input-group">
                         <input type="text" id="itemInput" placeholder="Add item..." class="item-name-input">
@@ -267,11 +247,10 @@
                 <div class="inventory-list" id="inventoryList">
                     <!-- Items will be added here dynamically -->
                 </div>
-            </section>
+            </div>
 
-            <!-- Locations Section -->
-            <section id="locations-section" class="content-section">
-                <h2>🗺️ Locations & Notes</h2>
+            <!-- Locations Tab -->
+            <div id="locations-tab" class="tab-pane">
                 <div class="add-location-section">
                     <div class="input-group">
                         <input type="text" id="locationInput" placeholder="Location name..." class="location-input">
@@ -282,18 +261,23 @@
                 <div class="locations-list" id="locationsList">
                     <!-- Locations will be added here dynamically -->
                 </div>
-            </section>
+            </div>
 
-            <!-- Character Profile -->
-            <section id="profile-section" class="content-section" style="display: none;">
-                <h2>👤 Character Profile</h2>
+            <!-- Profile Tab -->
+            <div id="profile-tab" class="tab-pane">
                 <div class="profile-section">
                     <div class="profile-field">
                         <label for="characterName">Character Name</label>
                         <input type="text" id="characterName" placeholder="Enter character name" class="profile-input">
                     </div>
                 </div>
-            </section>
+
+                <div class="settings-section">
+                    <h3>Settings</h3>
+                    <button id="saveBtn" class="action-btn save">Save Progress</button>
+                    <button id="clearBtn" class="action-btn danger">Clear All Data</button>
+                </div>
+            </div>
         </main>
     </div>
 

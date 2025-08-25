@@ -20,12 +20,7 @@ class DnDTracker {
             armorClass: 10,
             gold: 0,
             inventory: [],
-            locations: [],
-            sectionVisibility: {
-                'stats-section': true,
-                'inventory-section': true,
-                'locations-section': true
-            }
+            locations: []
         };
         
         this.currentTab = 'character';
@@ -35,58 +30,29 @@ class DnDTracker {
     init() {
         this.loadData();
         this.bindEvents();
-        this.bindMenuEvents();
+        this.bindTabEvents();
         this.updateUI();
-        this.restoreSectionVisibility();
     }
 
-    bindMenuEvents() {
-        const menuToggle = document.getElementById('menuToggle');
-        const menuDropdown = document.getElementById('menuDropdown');
-        
-        // Toggle menu dropdown
-        menuToggle.addEventListener('click', (e) => {
-            e.stopPropagation();
-            menuDropdown.classList.toggle('show');
-            menuToggle.classList.toggle('active');
-        });
+    bindTabEvents() {
+        const tabButtons = document.querySelectorAll('.tab-btn');
+        const tabPanes = document.querySelectorAll('.tab-pane');
 
-        // Close menu when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!menuToggle.contains(e.target) && !menuDropdown.contains(e.target)) {
-                menuDropdown.classList.remove('show');
-                menuToggle.classList.remove('active');
-            }
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const targetTab = button.dataset.tab;
+                
+                // Remove active class from all buttons and panes
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                tabPanes.forEach(pane => pane.classList.remove('active'));
+                
+                // Add active class to clicked button and corresponding pane
+                button.classList.add('active');
+                document.getElementById(`${targetTab}-tab`).classList.add('active');
+                
+                this.currentTab = targetTab;
+            });
         });
-
-        // Section toggles
-        document.getElementById('toggleStats').addEventListener('change', (e) => {
-            this.toggleSection('stats-section', e.target.checked);
-        });
-
-        document.getElementById('toggleInventory').addEventListener('change', (e) => {
-            this.toggleSection('inventory-section', e.target.checked);
-        });
-
-        document.getElementById('toggleLocations').addEventListener('change', (e) => {
-            this.toggleSection('locations-section', e.target.checked);
-        });
-    }
-
-    toggleSection(sectionId, show) {
-        const section = document.getElementById(sectionId);
-        if (show) {
-            section.classList.remove('hidden');
-            section.style.display = 'block';
-        } else {
-            section.classList.add('hidden');
-            section.style.display = 'none';
-        }
-        
-        // Save section visibility preferences
-        this.data.sectionVisibility = this.data.sectionVisibility || {};
-        this.data.sectionVisibility[sectionId] = show;
-        this.saveData();
     }
 
     bindEvents() {
@@ -319,23 +285,6 @@ class DnDTracker {
         this.updateLocationsDisplay();
     }
 
-    restoreSectionVisibility() {
-        const visibility = this.data.sectionVisibility || {
-            'stats-section': true,
-            'inventory-section': true,
-            'locations-section': true
-        };
-
-        // Update checkboxes and sections
-        document.getElementById('toggleStats').checked = visibility['stats-section'];
-        document.getElementById('toggleInventory').checked = visibility['inventory-section'];
-        document.getElementById('toggleLocations').checked = visibility['locations-section'];
-
-        // Apply visibility
-        this.toggleSection('stats-section', visibility['stats-section']);
-        this.toggleSection('inventory-section', visibility['inventory-section']);
-        this.toggleSection('locations-section', visibility['locations-section']);
-    }
 
     saveData() {
         localStorage.setItem('dndTrackerData', JSON.stringify(this.data));
