@@ -168,32 +168,6 @@ class DnDTracker {
             this.saveData();
         });
 
-        // Currency action buttons - simple approach
-        document.addEventListener('click', (e) => {
-            if (e.target.classList.contains('currency-action')) {
-                e.preventDefault();
-                
-                const currency = e.target.getAttribute('data-currency');
-                const action = e.target.getAttribute('data-action');
-                
-                if (!currency || !action) return;
-                
-                const currentValue = this.data.currency[currency] || 0;
-                
-                if (action === 'add') {
-                    this.data.currency[currency] = currentValue + 1;
-                } else if (action === 'subtract') {
-                    this.data.currency[currency] = Math.max(0, currentValue - 1);
-                }
-                
-                const inputElement = document.getElementById(currency);
-                if (inputElement) {
-                    inputElement.value = this.data.currency[currency];
-                }
-                
-                this.saveData();
-            }
-        });
 
         // Inventory
         document.getElementById('addItemBtn').addEventListener('click', () => {
