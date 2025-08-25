@@ -792,51 +792,85 @@ body {
     transform: translateY(1px);
 }
 
-/* Gold Section */
-.gold-section {
+/* Currency Section */
+.currency-section {
+    margin-bottom: 1.5rem;
+}
+
+.currency-section h3 {
+    color: var(--text-primary);
     margin-bottom: 1rem;
-}
-
-.gold-display {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    background: linear-gradient(135deg, var(--warning-color), #f97316);
-    color: white;
-    padding: 1rem;
-    border-radius: var(--border-radius);
+    font-size: 1.1rem;
     font-weight: 600;
-    box-shadow: var(--shadow);
+    text-align: center;
 }
 
-.gold-icon {
+.currency-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+}
+
+.currency-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 215, 0, 0.05));
+    border: 2px solid #ddd;
+    padding: 1rem 0.75rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    transition: all 0.2s ease;
+}
+
+.currency-item:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-lg);
+}
+
+.currency-item:nth-child(1) {
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(255, 215, 0, 0.08));
+    border-color: #FFD700;
+}
+
+.currency-item:nth-child(2) {
+    background: linear-gradient(135deg, rgba(192, 192, 192, 0.15), rgba(192, 192, 192, 0.08));
+    border-color: #C0C0C0;
+}
+
+.currency-item:nth-child(3) {
+    background: linear-gradient(135deg, rgba(184, 115, 51, 0.15), rgba(184, 115, 51, 0.08));
+    border-color: #B87333;
+}
+
+.currency-icon {
     font-size: 1.5rem;
 }
 
-.gold-input {
+.currency-input {
     background: none;
     border: none;
-    color: white;
-    font-size: 1.25rem;
-    font-weight: 700;
+    font-size: 1.1rem;
+    font-weight: 600;
     text-align: center;
-    width: 4rem;
+    width: 3rem;
     padding: 0.25rem;
     border-radius: 4px;
+    color: var(--text-primary);
 }
 
-.gold-input:focus {
+.currency-input:focus {
     outline: none;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.05);
 }
 
-.gold-input::placeholder {
-    color: rgba(255, 255, 255, 0.7);
-}
-
-.gold-label {
-    font-size: 1rem;
+.currency-label {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 /* Lists */
@@ -1148,6 +1182,25 @@ body {
         margin-bottom: 0.75rem;
     }
     
+    /* Currency Mobile Layout */
+    .currency-grid {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+        max-width: 300px;
+        margin: 0 auto;
+    }
+    
+    .currency-item {
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 0.75rem 1rem;
+    }
+    
+    .currency-input {
+        width: 4rem;
+        font-size: 1rem;
+    }
+
     /* Ensure touch targets are large enough */
     select, input[type="number"] {
         min-height: 40px;

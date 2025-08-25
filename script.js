@@ -21,7 +21,11 @@ class DnDTracker {
             },
             armorClass: 10,
             speed: 30,
-            gold: 0,
+            currency: {
+                gold: 0,
+                silver: 0,
+                copper: 0
+            },
             inventory: [],
             locations: []
         };
@@ -148,9 +152,19 @@ class DnDTracker {
             this.saveData();
         });
 
-        // Gold
+        // Currency
         document.getElementById('gold').addEventListener('input', (e) => {
-            this.data.gold = parseInt(e.target.value) || 0;
+            this.data.currency.gold = parseInt(e.target.value) || 0;
+            this.saveData();
+        });
+
+        document.getElementById('silver').addEventListener('input', (e) => {
+            this.data.currency.silver = parseInt(e.target.value) || 0;
+            this.saveData();
+        });
+
+        document.getElementById('copper').addEventListener('input', (e) => {
+            this.data.currency.copper = parseInt(e.target.value) || 0;
             this.saveData();
         });
 
@@ -361,8 +375,10 @@ class DnDTracker {
         document.getElementById('maxHP').value = this.data.hp.max;
         document.getElementById('armorClass').value = this.data.armorClass;
 
-        // Gold
-        document.getElementById('gold').value = this.data.gold;
+        // Currency
+        document.getElementById('gold').value = this.data.currency ? this.data.currency.gold || 0 : this.data.gold || 0;
+        document.getElementById('silver').value = this.data.currency ? this.data.currency.silver || 0 : 0;
+        document.getElementById('copper').value = this.data.currency ? this.data.currency.copper || 0 : 0;
 
         // Inventory and Locations
         this.updateInventoryDisplay();
@@ -384,6 +400,8 @@ class DnDTracker {
     clearData() {
         this.data = {
             characterName: '',
+            classLevel: '',
+            race: '',
             level: 1,
             stats: {
                 strength: 10,
@@ -398,7 +416,12 @@ class DnDTracker {
                 max: 10
             },
             armorClass: 10,
-            gold: 0,
+            speed: 30,
+            currency: {
+                gold: 0,
+                silver: 0,
+                copper: 0
+            },
             inventory: [],
             locations: []
         };
