@@ -1,4 +1,4 @@
-// D&D Tracker App JavaScript
+// D&D Companion App JavaScript
 
 class DnDTracker {
     constructor() {
@@ -23,26 +23,50 @@ class DnDTracker {
             locations: []
         };
         
+        this.currentTab = 'character';
         this.init();
     }
 
     init() {
         this.loadData();
         this.bindEvents();
+        this.bindTabEvents();
         this.updateUI();
+    }
+
+    bindTabEvents() {
+        const tabButtons = document.querySelectorAll('.tab-btn');
+        const tabPanes = document.querySelectorAll('.tab-pane');
+
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const targetTab = button.dataset.tab;
+                
+                // Remove active class from all buttons and panes
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                tabPanes.forEach(pane => pane.classList.remove('active'));
+                
+                // Add active class to clicked button and corresponding pane
+                button.classList.add('active');
+                document.getElementById(`${targetTab}-tab`).classList.add('active');
+                
+                this.currentTab = targetTab;
+            });
+        });
     }
 
     bindEvents() {
         // Character name
         document.getElementById('characterName').addEventListener('input', (e) => {
             this.data.characterName = e.target.value;
+            this.updateHeader();
             this.saveData();
         });
 
         // Level
         document.getElementById('level').addEventListener('input', (e) => {
             this.data.level = parseInt(e.target.value) || 1;
-            document.getElementById('characterLevel').textContent = this.data.level;
+            this.updateHeader();
             this.saveData();
         });
 
@@ -228,11 +252,19 @@ class DnDTracker {
         });
     }
 
+    updateHeader() {
+        const headerName = document.getElementById('headerCharacterName');
+        const headerLevel = document.getElementById('headerLevel');
+        
+        headerName.textContent = this.data.characterName || 'New Character';
+        headerLevel.textContent = `Lv.${this.data.level}`;
+    }
+
     updateUI() {
         // Character info
         document.getElementById('characterName').value = this.data.characterName;
         document.getElementById('level').value = this.data.level;
-        document.getElementById('characterLevel').textContent = this.data.level;
+        this.updateHeader();
 
         // Stats
         Object.keys(this.data.stats).forEach(stat => {
