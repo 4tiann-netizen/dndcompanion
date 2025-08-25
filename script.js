@@ -350,6 +350,12 @@ class DnDTracker {
 
     addWeapon() {
         console.log('addWeapon called');
+        
+        // Ensure weapons array exists
+        if (!this.data.weapons) {
+            this.data.weapons = [];
+        }
+        
         const weaponSelect = document.getElementById('weaponSelect');
         const selectedWeapon = weaponSelect ? weaponSelect.value : null;
         
@@ -530,6 +536,20 @@ class DnDTracker {
         const savedData = localStorage.getItem('dndTrackerData');
         if (savedData) {
             this.data = JSON.parse(savedData);
+            
+            // Ensure weapons array exists for existing save data
+            if (!this.data.weapons) {
+                this.data.weapons = [];
+            }
+            
+            // Ensure currency object exists for backward compatibility
+            if (!this.data.currency) {
+                this.data.currency = {
+                    gold: this.data.gold || 0,
+                    silver: 0,
+                    copper: 0
+                };
+            }
         }
     }
 
