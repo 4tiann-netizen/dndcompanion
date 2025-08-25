@@ -23,7 +23,7 @@ class DnDTracker {
             locations: []
         };
         
-        this.currentTab = 'character';
+        this.currentTab = 'home';
         this.init();
     }
 
@@ -48,6 +48,25 @@ class DnDTracker {
                 
                 // Add active class to clicked button and corresponding pane
                 button.classList.add('active');
+                document.getElementById(`${targetTab}-tab`).classList.add('active');
+                
+                this.currentTab = targetTab;
+            });
+        });
+
+        // Bubble navigation
+        const navBubbles = document.querySelectorAll('.nav-bubble');
+        navBubbles.forEach(bubble => {
+            bubble.addEventListener('click', () => {
+                const targetTab = bubble.dataset.target;
+                
+                // Remove active class from all buttons and panes
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                tabPanes.forEach(pane => pane.classList.remove('active'));
+                
+                // Add active class to target button and pane
+                const targetButton = document.querySelector(`[data-tab="${targetTab}"]`);
+                targetButton.classList.add('active');
                 document.getElementById(`${targetTab}-tab`).classList.add('active');
                 
                 this.currentTab = targetTab;
@@ -255,9 +274,14 @@ class DnDTracker {
     updateHeader() {
         const headerName = document.getElementById('headerCharacterName');
         const headerLevel = document.getElementById('headerLevel');
+        const homeCharacterName = document.getElementById('homeCharacterName');
         
-        headerName.textContent = this.data.characterName || 'New Character';
+        const displayName = this.data.characterName || 'New Character';
+        const homeDisplayName = this.data.characterName || 'Adventurer';
+        
+        headerName.textContent = displayName;
         headerLevel.textContent = `Lv.${this.data.level}`;
+        homeCharacterName.textContent = homeDisplayName;
     }
 
     updateUI() {

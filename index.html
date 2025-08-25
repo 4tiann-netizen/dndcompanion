@@ -19,7 +19,11 @@
 
         <!-- Tab Navigation -->
         <nav class="tab-nav">
-            <button class="tab-btn active" data-tab="character">
+            <button class="tab-btn active" data-tab="home">
+                <span class="tab-icon">🏠</span>
+                <span class="tab-label">Home</span>
+            </button>
+            <button class="tab-btn" data-tab="character">
                 <span class="tab-icon">⚔️</span>
                 <span class="tab-label">Character</span>
             </button>
@@ -39,8 +43,38 @@
 
         <!-- Tab Content -->
         <main class="tab-content">
+            <!-- Home Tab -->
+            <div id="home-tab" class="tab-pane active">
+                <div class="home-content">
+                    <div class="welcome-message">
+                        <h2>Welcome, <span id="homeCharacterName">Adventurer</span>!</h2>
+                        <p>Choose what you'd like to manage:</p>
+                    </div>
+                    
+                    <div class="bubble-navigation">
+                        <button class="nav-bubble stats-bubble" data-target="character">
+                            <div class="bubble-icon">⚔️</div>
+                            <div class="bubble-title">Character Stats</div>
+                            <div class="bubble-desc">Manage your abilities, HP, and combat stats</div>
+                        </button>
+                        
+                        <button class="nav-bubble inventory-bubble" data-target="inventory">
+                            <div class="bubble-icon">🎒</div>
+                            <div class="bubble-title">Inventory</div>
+                            <div class="bubble-desc">Track items, equipment, and gold</div>
+                        </button>
+                        
+                        <button class="nav-bubble notes-bubble" data-target="locations">
+                            <div class="bubble-icon">🗺️</div>
+                            <div class="bubble-title">Locations & Notes</div>
+                            <div class="bubble-desc">Record places, NPCs, and campaign notes</div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
             <!-- Character Tab -->
-            <div id="character-tab" class="tab-pane active">
+            <div id="character-tab" class="tab-pane">
                 <div class="stats-grid">
                     <div class="stat-card">
                         <div class="stat-label">STR</div>
@@ -263,7 +297,7 @@
                 </div>
             </div>
 
-            <!-- Profile Tab -->
+            <!-- Profile Tab (Character Name & Settings) -->
             <div id="profile-tab" class="tab-pane">
                 <div class="profile-section">
                     <div class="profile-field">
