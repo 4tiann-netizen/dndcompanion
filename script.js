@@ -4,6 +4,8 @@ class DnDTracker {
     constructor() {
         this.data = {
             characterName: '',
+            classLevel: '',
+            race: '',
             level: 1,
             stats: {
                 strength: 10,
@@ -18,6 +20,7 @@ class DnDTracker {
                 max: 10
             },
             armorClass: 10,
+            speed: 30,
             gold: 0,
             inventory: [],
             locations: []
@@ -75,10 +78,30 @@ class DnDTracker {
     }
 
     bindEvents() {
-        // Character name
+        // Character name (multiple inputs)
         document.getElementById('characterName').addEventListener('input', (e) => {
             this.data.characterName = e.target.value;
+            document.getElementById('characterNameDisplay').value = e.target.value;
             this.updateHeader();
+            this.saveData();
+        });
+        
+        document.getElementById('characterNameDisplay').addEventListener('input', (e) => {
+            this.data.characterName = e.target.value;
+            document.getElementById('characterName').value = e.target.value;
+            this.updateHeader();
+            this.saveData();
+        });
+
+        // Class & Level
+        document.getElementById('classLevel').addEventListener('input', (e) => {
+            this.data.classLevel = e.target.value;
+            this.saveData();
+        });
+
+        // Race
+        document.getElementById('race').addEventListener('input', (e) => {
+            this.data.race = e.target.value;
             this.saveData();
         });
 
@@ -86,6 +109,13 @@ class DnDTracker {
         document.getElementById('level').addEventListener('input', (e) => {
             this.data.level = parseInt(e.target.value) || 1;
             this.updateHeader();
+            this.updateProficiencyBonus();
+            this.saveData();
+        });
+
+        // Speed
+        document.getElementById('speed').addEventListener('input', (e) => {
+            this.data.speed = parseInt(e.target.value) || 30;
             this.saveData();
         });
 
@@ -94,6 +124,9 @@ class DnDTracker {
             document.getElementById(stat).addEventListener('change', (e) => {
                 this.data.stats[stat] = parseInt(e.target.value) || 10;
                 this.updateModifier(stat);
+                if (stat === 'dexterity') {
+                    this.updateInitiative();
+                }
                 this.saveData();
             });
         });
@@ -165,6 +198,25 @@ class DnDTracker {
         const modifier = this.calculateModifier(score);
         const modifierElement = document.getElementById(stat.substring(0, 3) + 'Mod');
         modifierElement.textContent = modifier >= 0 ? `+${modifier}` : modifier;
+    }
+
+    updateInitiative() {
+        const dexModifier = this.calculateModifier(this.data.stats.dexterity);
+        const initiativeElement = document.getElementById('initiative');
+        initiativeElement.value = dexModifier >= 0 ? `+${dexModifier}` : dexModifier;
+    }
+
+    updateProficiencyBonus() {
+        // D&D 5e proficiency bonus by level
+        const level = this.data.level;
+        let profBonus = 2;
+        if (level >= 17) profBonus = 6;
+        else if (level >= 13) profBonus = 5;
+        else if (level >= 9) profBonus = 4;
+        else if (level >= 5) profBonus = 3;
+        
+        const profElement = document.getElementById('proficiencyBonus');
+        profElement.textContent = `+${profBonus}`;
     }
 
     addItem() {
@@ -287,7 +339,11 @@ class DnDTracker {
     updateUI() {
         // Character info
         document.getElementById('characterName').value = this.data.characterName;
+        document.getElementById('characterNameDisplay').value = this.data.characterName;
+        document.getElementById('classLevel').value = this.data.classLevel || '';
+        document.getElementById('race').value = this.data.race || '';
         document.getElementById('level').value = this.data.level;
+        document.getElementById('speed').value = this.data.speed || 30;
         this.updateHeader();
 
         // Stats
@@ -295,6 +351,10 @@ class DnDTracker {
             document.getElementById(stat).value = this.data.stats[stat];
             this.updateModifier(stat);
         });
+
+        // Update calculated values
+        this.updateInitiative();
+        this.updateProficiencyBonus();
 
         // HP and AC
         document.getElementById('currentHP').value = this.data.hp.current;
