@@ -868,6 +868,13 @@ body {
     justify-content: center;
     transition: all 0.2s ease;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .currency-action:hover {
@@ -1217,6 +1224,12 @@ body {
         width: 50px;
         height: 50px;
         font-size: 24px;
+    }
+    
+    .currency-action:active {
+        background: var(--primary-dark);
+        transform: scale(0.9);
+        transition: all 0.1s ease;
     }
     
     .currency-display {

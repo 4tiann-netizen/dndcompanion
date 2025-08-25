@@ -168,9 +168,12 @@ class DnDTracker {
             this.saveData();
         });
 
-        // Currency action buttons
+        // Currency action buttons - handle both click and touch events
         document.querySelectorAll('.currency-action').forEach(btn => {
-            btn.addEventListener('click', (e) => {
+            const handleCurrencyAction = (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                
                 const currency = e.target.dataset.currency;
                 const action = e.target.dataset.action;
                 const currentValue = this.data.currency[currency] || 0;
@@ -183,7 +186,10 @@ class DnDTracker {
                 
                 this.updateCurrencyDisplay();
                 this.saveData();
-            });
+            };
+            
+            btn.addEventListener('click', handleCurrencyAction);
+            btn.addEventListener('touchend', handleCurrencyAction);
         });
 
         // Inventory
