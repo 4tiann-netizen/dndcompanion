@@ -792,6 +792,98 @@ body {
     transform: translateY(1px);
 }
 
+/* Weapons Section */
+.weapons-section {
+    margin-bottom: 1.5rem;
+}
+
+.weapons-section h3 {
+    color: var(--text-primary);
+    margin-bottom: 0.75rem;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.add-weapon-section {
+    margin-bottom: 1rem;
+}
+
+.weapon-input-group {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.weapon-select {
+    flex: 1;
+    padding: 0.75rem;
+    border: 1px solid var(--border);
+    border-radius: var(--border-radius);
+    font-size: 0.9rem;
+    background: var(--surface);
+    color: var(--text-primary);
+}
+
+.weapon-select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+}
+
+.weapons-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.weapon-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--border-radius);
+    padding: 1rem;
+    box-shadow: var(--shadow);
+}
+
+.weapon-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.weapon-name {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.weapon-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0.5rem;
+}
+
+.weapon-stat {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.stat-label {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    min-width: 60px;
+}
+
+.stat-value {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
 /* Currency Section */
 .currency-section {
     margin-bottom: 1.5rem;
@@ -1209,6 +1301,43 @@ body {
         font-size: 0.7rem;
         min-width: auto;
         text-align: center;
+    }
+    
+    /* Weapons Mobile Layout */
+    .weapon-input-group {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+    
+    .weapon-select {
+        width: 100%;
+        min-height: 48px;
+        font-size: 1rem;
+    }
+    
+    .weapon-stats {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+    }
+    
+    .weapon-stat {
+        justify-content: space-between;
+        padding: 0.5rem 0;
+        border-bottom: 1px solid var(--border);
+    }
+    
+    .weapon-stat:last-child {
+        border-bottom: none;
+    }
+    
+    .stat-label {
+        min-width: auto;
+        font-size: 0.9rem;
+    }
+    
+    .stat-value {
+        font-size: 1rem;
+        text-align: right;
     }
 
     /* Ensure touch targets are large enough */

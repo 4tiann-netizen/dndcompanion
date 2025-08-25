@@ -2,6 +2,50 @@
 
 class DnDTracker {
     constructor() {
+        this.weaponsDatabase = {
+            // Simple Melee Weapons
+            "Club": { damage: "1d4", damageType: "bludgeoning", properties: ["Light"], cost: "1 sp", weight: "2 lb" },
+            "Dagger": { damage: "1d4", damageType: "piercing", properties: ["Finesse", "Light", "Thrown"], cost: "2 gp", weight: "1 lb" },
+            "Dart": { damage: "1d4", damageType: "piercing", properties: ["Finesse", "Thrown"], cost: "5 cp", weight: "1/4 lb" },
+            "Javelin": { damage: "1d6", damageType: "piercing", properties: ["Thrown"], cost: "5 sp", weight: "2 lb" },
+            "Mace": { damage: "1d6", damageType: "bludgeoning", properties: [], cost: "5 gp", weight: "4 lb" },
+            "Quarterstaff": { damage: "1d6", damageType: "bludgeoning", properties: ["Versatile (1d8)"], cost: "2 sp", weight: "4 lb" },
+            "Sickle": { damage: "1d4", damageType: "slashing", properties: ["Light"], cost: "1 gp", weight: "2 lb" },
+            "Spear": { damage: "1d6", damageType: "piercing", properties: ["Thrown", "Versatile (1d8)"], cost: "1 gp", weight: "3 lb" },
+            
+            // Simple Ranged Weapons
+            "Light Crossbow": { damage: "1d8", damageType: "piercing", properties: ["Ammunition", "Loading", "Two-handed"], cost: "25 gp", weight: "5 lb" },
+            "Shortbow": { damage: "1d6", damageType: "piercing", properties: ["Ammunition", "Two-handed"], cost: "25 gp", weight: "2 lb" },
+            "Sling": { damage: "1d4", damageType: "bludgeoning", properties: ["Ammunition"], cost: "1 sp", weight: "" },
+            
+            // Martial Melee Weapons
+            "Battleaxe": { damage: "1d8", damageType: "slashing", properties: ["Versatile (1d10)"], cost: "10 gp", weight: "4 lb" },
+            "Flail": { damage: "1d8", damageType: "bludgeoning", properties: [], cost: "10 gp", weight: "2 lb" },
+            "Glaive": { damage: "1d10", damageType: "slashing", properties: ["Heavy", "Reach", "Two-handed"], cost: "20 gp", weight: "6 lb" },
+            "Greataxe": { damage: "1d12", damageType: "slashing", properties: ["Heavy", "Two-handed"], cost: "30 gp", weight: "7 lb" },
+            "Greatsword": { damage: "2d6", damageType: "slashing", properties: ["Heavy", "Two-handed"], cost: "50 gp", weight: "6 lb" },
+            "Halberd": { damage: "1d10", damageType: "slashing", properties: ["Heavy", "Reach", "Two-handed"], cost: "20 gp", weight: "6 lb" },
+            "Lance": { damage: "1d12", damageType: "piercing", properties: ["Reach", "Special"], cost: "10 gp", weight: "6 lb" },
+            "Longsword": { damage: "1d8", damageType: "slashing", properties: ["Versatile (1d10)"], cost: "15 gp", weight: "3 lb" },
+            "Maul": { damage: "2d6", damageType: "bludgeoning", properties: ["Heavy", "Two-handed"], cost: "10 gp", weight: "10 lb" },
+            "Morningstar": { damage: "1d8", damageType: "piercing", properties: [], cost: "15 gp", weight: "4 lb" },
+            "Pike": { damage: "1d10", damageType: "piercing", properties: ["Heavy", "Reach", "Two-handed"], cost: "5 gp", weight: "18 lb" },
+            "Rapier": { damage: "1d8", damageType: "piercing", properties: ["Finesse"], cost: "25 gp", weight: "2 lb" },
+            "Scimitar": { damage: "1d6", damageType: "slashing", properties: ["Finesse", "Light"], cost: "25 gp", weight: "3 lb" },
+            "Shortsword": { damage: "1d6", damageType: "piercing", properties: ["Finesse", "Light"], cost: "10 gp", weight: "2 lb" },
+            "Trident": { damage: "1d6", damageType: "piercing", properties: ["Thrown", "Versatile (1d8)"], cost: "5 gp", weight: "4 lb" },
+            "War Pick": { damage: "1d8", damageType: "piercing", properties: [], cost: "5 gp", weight: "2 lb" },
+            "Warhammer": { damage: "1d8", damageType: "bludgeoning", properties: ["Versatile (1d10)"], cost: "15 gp", weight: "2 lb" },
+            "Whip": { damage: "1d4", damageType: "slashing", properties: ["Finesse", "Reach"], cost: "2 gp", weight: "3 lb" },
+            
+            // Martial Ranged Weapons
+            "Blowgun": { damage: "1", damageType: "piercing", properties: ["Ammunition", "Loading"], cost: "10 gp", weight: "1 lb" },
+            "Hand Crossbow": { damage: "1d6", damageType: "piercing", properties: ["Ammunition", "Light", "Loading"], cost: "75 gp", weight: "3 lb" },
+            "Heavy Crossbow": { damage: "1d10", damageType: "piercing", properties: ["Ammunition", "Heavy", "Loading", "Two-handed"], cost: "50 gp", weight: "18 lb" },
+            "Longbow": { damage: "1d8", damageType: "piercing", properties: ["Ammunition", "Heavy", "Two-handed"], cost: "50 gp", weight: "2 lb" },
+            "Net": { damage: "", damageType: "", properties: ["Special", "Thrown"], cost: "1 gp", weight: "3 lb" }
+        };
+
         this.data = {
             characterName: '',
             classLevel: '',
@@ -27,6 +71,7 @@ class DnDTracker {
                 copper: 0
             },
             inventory: [],
+            weapons: [],
             locations: []
         };
         
@@ -38,6 +83,7 @@ class DnDTracker {
         this.loadData();
         this.bindEvents();
         this.bindTabEvents();
+        this.populateWeaponSelect();
         this.updateUI();
     }
 
@@ -168,6 +214,10 @@ class DnDTracker {
             this.saveData();
         });
 
+        // Weapons
+        document.getElementById('addWeaponBtn').addEventListener('click', () => {
+            this.addWeapon();
+        });
 
         // Inventory
         document.getElementById('addItemBtn').addEventListener('click', () => {
@@ -284,6 +334,81 @@ class DnDTracker {
         });
     }
 
+    populateWeaponSelect() {
+        const weaponSelect = document.getElementById('weaponSelect');
+        const weaponNames = Object.keys(this.weaponsDatabase).sort();
+        
+        weaponNames.forEach(weaponName => {
+            const option = document.createElement('option');
+            option.value = weaponName;
+            option.textContent = weaponName;
+            weaponSelect.appendChild(option);
+        });
+    }
+
+    addWeapon() {
+        const weaponSelect = document.getElementById('weaponSelect');
+        const selectedWeapon = weaponSelect.value;
+
+        if (selectedWeapon && this.weaponsDatabase[selectedWeapon]) {
+            const weapon = {
+                id: Date.now(),
+                name: selectedWeapon,
+                ...this.weaponsDatabase[selectedWeapon]
+            };
+
+            this.data.weapons.push(weapon);
+            weaponSelect.value = '';
+            this.updateWeaponsDisplay();
+            this.saveData();
+        }
+    }
+
+    removeWeapon(id) {
+        this.data.weapons = this.data.weapons.filter(weapon => weapon.id !== id);
+        this.updateWeaponsDisplay();
+        this.saveData();
+    }
+
+    updateWeaponsDisplay() {
+        const weaponsList = document.getElementById('weaponsList');
+        weaponsList.innerHTML = '';
+
+        this.data.weapons.forEach(weapon => {
+            const weaponElement = document.createElement('div');
+            weaponElement.className = 'weapon-item';
+            weaponElement.innerHTML = `
+                <div class="weapon-header">
+                    <span class="weapon-name">${weapon.name}</span>
+                    <button class="delete-btn" onclick="tracker.removeWeapon(${weapon.id})">Remove</button>
+                </div>
+                <div class="weapon-stats">
+                    <div class="weapon-stat">
+                        <span class="stat-label">Damage:</span>
+                        <span class="stat-value">${weapon.damage} ${weapon.damageType}</span>
+                    </div>
+                    ${weapon.properties.length > 0 ? `
+                    <div class="weapon-stat">
+                        <span class="stat-label">Properties:</span>
+                        <span class="stat-value">${weapon.properties.join(', ')}</span>
+                    </div>
+                    ` : ''}
+                    <div class="weapon-stat">
+                        <span class="stat-label">Cost:</span>
+                        <span class="stat-value">${weapon.cost}</span>
+                    </div>
+                    ${weapon.weight ? `
+                    <div class="weapon-stat">
+                        <span class="stat-label">Weight:</span>
+                        <span class="stat-value">${weapon.weight}</span>
+                    </div>
+                    ` : ''}
+                </div>
+            `;
+            weaponsList.appendChild(weaponElement);
+        });
+    }
+
     addLocation() {
         const locationInput = document.getElementById('locationInput');
         const locationName = locationInput.value.trim();
@@ -382,8 +507,9 @@ class DnDTracker {
         document.getElementById('silver').value = this.data.currency ? this.data.currency.silver || 0 : 0;
         document.getElementById('copper').value = this.data.currency ? this.data.currency.copper || 0 : 0;
 
-        // Inventory and Locations
+        // Inventory, Weapons, and Locations
         this.updateInventoryDisplay();
+        this.updateWeaponsDisplay();
         this.updateLocationsDisplay();
     }
 
@@ -425,6 +551,7 @@ class DnDTracker {
                 copper: 0
             },
             inventory: [],
+            weapons: [],
             locations: []
         };
         
