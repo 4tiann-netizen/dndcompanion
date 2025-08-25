@@ -17,59 +17,210 @@
             </div>
         </header>
 
-        <!-- Tab Navigation -->
-        <nav class="tab-nav">
-            <button class="tab-btn active" data-tab="character">
-                <span class="tab-icon">⚔️</span>
-                <span class="tab-label">Character</span>
+        <!-- Section Menu -->
+        <nav class="section-menu">
+            <button class="menu-btn" id="menuToggle">
+                <span class="menu-icon">☰</span>
+                <span class="menu-label">Menu</span>
             </button>
-            <button class="tab-btn" data-tab="inventory">
-                <span class="tab-icon">🎒</span>
-                <span class="tab-label">Inventory</span>
-            </button>
-            <button class="tab-btn" data-tab="locations">
-                <span class="tab-icon">🗺️</span>
-                <span class="tab-label">Locations</span>
-            </button>
-            <button class="tab-btn" data-tab="profile">
-                <span class="tab-icon">👤</span>
-                <span class="tab-label">Profile</span>
-            </button>
+            <div class="menu-dropdown" id="menuDropdown">
+                <div class="menu-item">
+                    <label class="toggle-label">
+                        <input type="checkbox" id="toggleStats" checked>
+                        <span class="checkmark">⚔️</span>
+                        <span class="menu-text">Character Stats</span>
+                    </label>
+                </div>
+                <div class="menu-item">
+                    <label class="toggle-label">
+                        <input type="checkbox" id="toggleInventory" checked>
+                        <span class="checkmark">🎒</span>
+                        <span class="menu-text">Inventory</span>
+                    </label>
+                </div>
+                <div class="menu-item">
+                    <label class="toggle-label">
+                        <input type="checkbox" id="toggleLocations" checked>
+                        <span class="checkmark">🗺️</span>
+                        <span class="menu-text">Locations & Notes</span>
+                    </label>
+                </div>
+                <div class="menu-divider"></div>
+                <div class="menu-item">
+                    <button id="saveBtn" class="menu-action-btn save">💾 Save Progress</button>
+                </div>
+                <div class="menu-item">
+                    <button id="clearBtn" class="menu-action-btn danger">🗑️ Clear All Data</button>
+                </div>
+            </div>
         </nav>
 
-        <!-- Tab Content -->
-        <main class="tab-content">
-            <!-- Character Tab -->
-            <div id="character-tab" class="tab-pane active">
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Character Section -->
+            <section id="stats-section" class="content-section">
+                <h2>⚔️ Character Stats</h2>
                 <div class="stats-grid">
                     <div class="stat-card">
                         <div class="stat-label">STR</div>
-                        <input type="number" id="strength" min="1" max="20" value="10" class="stat-input">
+                        <select id="strength" class="stat-select">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10" selected>10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                            <option value="13">13</option>
+                            <option value="14">14</option>
+                            <option value="15">15</option>
+                            <option value="16">16</option>
+                            <option value="17">17</option>
+                            <option value="18">18</option>
+                            <option value="19">19</option>
+                            <option value="20">20</option>
+                            <option value="21">21</option>
+                        </select>
                         <div class="stat-modifier" id="strMod">+0</div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-label">DEX</div>
-                        <input type="number" id="dexterity" min="1" max="20" value="10" class="stat-input">
+                        <select id="dexterity" class="stat-select">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10" selected>10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                            <option value="13">13</option>
+                            <option value="14">14</option>
+                            <option value="15">15</option>
+                            <option value="16">16</option>
+                            <option value="17">17</option>
+                            <option value="18">18</option>
+                            <option value="19">19</option>
+                            <option value="20">20</option>
+                            <option value="21">21</option>
+                        </select>
                         <div class="stat-modifier" id="dexMod">+0</div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-label">CON</div>
-                        <input type="number" id="constitution" min="1" max="20" value="10" class="stat-input">
+                        <select id="constitution" class="stat-select">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10" selected>10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                            <option value="13">13</option>
+                            <option value="14">14</option>
+                            <option value="15">15</option>
+                            <option value="16">16</option>
+                            <option value="17">17</option>
+                            <option value="18">18</option>
+                            <option value="19">19</option>
+                            <option value="20">20</option>
+                            <option value="21">21</option>
+                        </select>
                         <div class="stat-modifier" id="conMod">+0</div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-label">INT</div>
-                        <input type="number" id="intelligence" min="1" max="20" value="10" class="stat-input">
+                        <select id="intelligence" class="stat-select">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10" selected>10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                            <option value="13">13</option>
+                            <option value="14">14</option>
+                            <option value="15">15</option>
+                            <option value="16">16</option>
+                            <option value="17">17</option>
+                            <option value="18">18</option>
+                            <option value="19">19</option>
+                            <option value="20">20</option>
+                            <option value="21">21</option>
+                        </select>
                         <div class="stat-modifier" id="intMod">+0</div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-label">WIS</div>
-                        <input type="number" id="wisdom" min="1" max="20" value="10" class="stat-input">
+                        <select id="wisdom" class="stat-select">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10" selected>10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                            <option value="13">13</option>
+                            <option value="14">14</option>
+                            <option value="15">15</option>
+                            <option value="16">16</option>
+                            <option value="17">17</option>
+                            <option value="18">18</option>
+                            <option value="19">19</option>
+                            <option value="20">20</option>
+                            <option value="21">21</option>
+                        </select>
                         <div class="stat-modifier" id="wisMod">+0</div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-label">CHA</div>
-                        <input type="number" id="charisma" min="1" max="20" value="10" class="stat-input">
+                        <select id="charisma" class="stat-select">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10" selected>10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                            <option value="13">13</option>
+                            <option value="14">14</option>
+                            <option value="15">15</option>
+                            <option value="16">16</option>
+                            <option value="17">17</option>
+                            <option value="18">18</option>
+                            <option value="19">19</option>
+                            <option value="20">20</option>
+                            <option value="21">21</option>
+                        </select>
                         <div class="stat-modifier" id="chaMod">+0</div>
                     </div>
                 </div>
@@ -92,10 +243,11 @@
                         <input type="number" id="level" min="1" max="20" value="1" class="combat-input">
                     </div>
                 </div>
-            </div>
+            </section>
 
-            <!-- Inventory Tab -->
-            <div id="inventory-tab" class="tab-pane">
+            <!-- Inventory Section -->
+            <section id="inventory-section" class="content-section">
+                <h2>🎒 Inventory</h2>
                 <div class="add-item-section">
                     <div class="input-group">
                         <input type="text" id="itemInput" placeholder="Add item..." class="item-name-input">
@@ -115,10 +267,11 @@
                 <div class="inventory-list" id="inventoryList">
                     <!-- Items will be added here dynamically -->
                 </div>
-            </div>
+            </section>
 
-            <!-- Locations Tab -->
-            <div id="locations-tab" class="tab-pane">
+            <!-- Locations Section -->
+            <section id="locations-section" class="content-section">
+                <h2>🗺️ Locations & Notes</h2>
                 <div class="add-location-section">
                     <div class="input-group">
                         <input type="text" id="locationInput" placeholder="Location name..." class="location-input">
@@ -129,23 +282,18 @@
                 <div class="locations-list" id="locationsList">
                     <!-- Locations will be added here dynamically -->
                 </div>
-            </div>
+            </section>
 
-            <!-- Profile Tab -->
-            <div id="profile-tab" class="tab-pane">
+            <!-- Character Profile -->
+            <section id="profile-section" class="content-section" style="display: none;">
+                <h2>👤 Character Profile</h2>
                 <div class="profile-section">
                     <div class="profile-field">
                         <label for="characterName">Character Name</label>
                         <input type="text" id="characterName" placeholder="Enter character name" class="profile-input">
                     </div>
                 </div>
-
-                <div class="settings-section">
-                    <h3>Settings</h3>
-                    <button id="saveBtn" class="action-btn save">Save Progress</button>
-                    <button id="clearBtn" class="action-btn danger">Clear All Data</button>
-                </div>
-            </div>
+            </section>
         </main>
     </div>
 
