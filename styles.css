@@ -1021,12 +1021,26 @@ body {
 @media (max-width: 768px) {
     .character-sheet {
         margin: 0.5rem;
-        padding: 1rem;
+        padding: 0.75rem;
+        background: linear-gradient(145deg, #f5f5dc 0%, #fffacd 100%);
+        border: 2px solid #8B4513;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(139, 69, 19, 0.3);
+    }
+    
+    .character-header {
+        margin-bottom: 1rem;
+    }
+    
+    .basic-field input {
+        font-size: 0.9rem;
+        padding: 0.4rem;
     }
     
     .sheet-body {
-        grid-template-columns: 1fr;
-        gap: 1rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
     }
     
     .basic-row {
@@ -1034,39 +1048,109 @@ body {
         gap: 0.5rem;
     }
     
-    .initiative-speed {
-        flex-direction: column;
+    /* Ability Scores Mobile Layout */
+    .abilities-list {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
         gap: 0.75rem;
     }
     
+    .ability-block {
+        padding: 0.5rem;
+    }
+    
     .ability-score {
-        width: 50px;
-        height: 50px;
-        font-size: 1.2rem;
+        width: 45px;
+        height: 45px;
+        font-size: 1rem;
     }
     
     .ability-modifier {
-        width: 35px;
-        height: 20px;
-        font-size: 0.7rem;
+        width: 30px;
+        height: 18px;
+        font-size: 0.65rem;
+    }
+    
+    .ability-name {
+        font-size: 0.6rem;
+        margin-bottom: 0.25rem;
+    }
+    
+    /* Combat Stats Mobile Layout */
+    .combat-section {
+        gap: 1rem;
+    }
+    
+    .initiative-speed {
+        gap: 0.5rem;
+    }
+    
+    .stat-box {
+        padding: 0.75rem;
+        min-height: 60px;
+    }
+    
+    .stat-input {
+        font-size: 1rem;
+        padding: 0.25rem;
     }
     
     .ac-box {
-        width: 80px;
-        height: 80px;
+        width: 70px;
+        height: 70px;
+        padding: 0.5rem;
     }
     
     .ac-input {
-        font-size: 1.5rem;
+        font-size: 1.3rem;
     }
     
+    .ac-box label {
+        font-size: 0.55rem;
+    }
+    
+    .hp-box {
+        gap: 0.5rem;
+    }
+    
+    .hp-input {
+        font-size: 0.9rem;
+        padding: 0.4rem;
+    }
+    
+    .level-box {
+        padding: 0.5rem;
+    }
+    
+    .level-input {
+        font-size: 1.2rem;
+        padding: 0.3rem;
+    }
+    
+    /* Proficiency Bonus Mobile */
     .prof-bonus-box {
-        width: 60px;
-        height: 60px;
+        width: 50px;
+        height: 50px;
+        padding: 0.25rem;
     }
     
     .prof-bonus {
-        font-size: 1.2rem;
+        font-size: 1rem;
+    }
+    
+    .prof-bonus-box label {
+        font-size: 0.5rem;
+    }
+    
+    /* Mobile specific improvements */
+    .left-column h3 {
+        font-size: 0.7rem;
+        margin-bottom: 0.75rem;
+    }
+    
+    /* Ensure touch targets are large enough */
+    select, input[type="number"] {
+        min-height: 40px;
     }
 }
 
