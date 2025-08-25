@@ -184,7 +184,7 @@ class DnDTracker {
                     this.data.currency[currency] = Math.max(0, currentValue - 1);
                 }
                 
-                this.updateCurrencyDisplay();
+                document.getElementById(currency).value = this.data.currency[currency];
                 this.saveData();
             };
             
@@ -374,11 +374,6 @@ class DnDTracker {
         homeCharacterName.textContent = homeDisplayName;
     }
 
-    updateCurrencyDisplay() {
-        document.getElementById('goldDisplay').textContent = this.data.currency?.gold || 0;
-        document.getElementById('silverDisplay').textContent = this.data.currency?.silver || 0;
-        document.getElementById('copperDisplay').textContent = this.data.currency?.copper || 0;
-    }
 
     updateUI() {
         // Character info
@@ -405,11 +400,10 @@ class DnDTracker {
         document.getElementById('maxHP').value = this.data.hp.max;
         document.getElementById('armorClass').value = this.data.armorClass;
 
-        // Currency - update both hidden inputs and display
+        // Currency
         document.getElementById('gold').value = this.data.currency ? this.data.currency.gold || 0 : this.data.gold || 0;
         document.getElementById('silver').value = this.data.currency ? this.data.currency.silver || 0 : 0;
         document.getElementById('copper').value = this.data.currency ? this.data.currency.copper || 0 : 0;
-        this.updateCurrencyDisplay();
 
         // Inventory and Locations
         this.updateInventoryDisplay();
